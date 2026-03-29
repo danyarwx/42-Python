@@ -2,12 +2,12 @@
 # ########################################################################### #
 #   shebang: 1                                                                #
 #                                                          :::      ::::::::  #
-#   ft_plant_growth.py                                   :+:      :+:    :+:  #
+#   ft_plant_factory.py                                  :+:      :+:    :+:  #
 #                                                      +:+ +:+         +:+    #
 #   By: dzhukov <dzhukov@student.42heilbronn.de>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
-#   Created: 2026/03/27 23:43:51 by dzhukov             #+#    #+#            #
-#   Updated: 2026/03/28 11:11:34 by dzhukov            ###   ########.fr      #
+#   Created: 2026/03/28 15:19:30 by dzhukov             #+#    #+#            #
+#   Updated: 2026/03/28 15:39:10 by dzhukov            ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -29,20 +29,17 @@ class Plant:
         print(f"{self.name}: {self.height}cm, {self.aged} days old")
 
 
-def ft_plant_growth() -> None:
+def ft_plant_factory():
     rose = Plant("Rose", 25.0, 30, 0.8)
-    print("=== Garden Plant Growth ===")
-    print("=== Day 1 ===")
-    start = rose.height
-    rose.show()
-    for i in range(2, 8):
-        print(f"=== Day {i} ===")
-        rose.grow()
-        rose.age()
-        rose.show()
-    growth = round(rose.height - start, 1)
-    print(f"Growth this week: {growth}cm")
-
+    oak = Plant("Oak", 200.0, 365, 1.2)
+    cactus = Plant("Cactus", 5.0, 90, 0.5)
+    sun = Plant("Sunflower", 80.0, 45, 1.8)
+    fern = Plant("Fern", 15.0, 120, 0.5)
+    plants = [rose, oak, cactus, sun, fern]
+    print("=== Plant Factory Output ===")
+    for plant in plants:
+        print("Created:", end=" ")
+        plant.show()
 
 if __name__ == "__main__":
-    ft_plant_growth()
+    ft_plant_factory()
