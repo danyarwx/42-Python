@@ -7,7 +7,7 @@
 #   By: dzhukov <dzhukov@student.42heilbronn.de>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/03/28 15:19:30 by dzhukov             #+#    #+#            #
-#   Updated: 2026/03/28 15:39:10 by dzhukov            ###   ########.fr      #
+#   Updated: 2026/04/03 21:35:51 by dzhukov            ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -40,6 +40,7 @@ def ft_plant_factory():
     for plant in plants:
         print("Created:", end=" ")
         plant.show()
+
 
 if __name__ == "__main__":
     ft_plant_factory()

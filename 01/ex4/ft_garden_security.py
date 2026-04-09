@@ -7,7 +7,7 @@
 #   By: dzhukov <dzhukov@student.42heilbronn.de>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/03/28 15:42:26 by dzhukov             #+#    #+#            #
-#   Updated: 2026/04/03 21:12:35 by dzhukov            ###   ########.fr      #
+#   Updated: 2026/04/03 22:31:08 by dzhukov            ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -28,12 +28,12 @@ class Plant:
         print(f"Plant created: ", end=" ")
         self.show()
 
-    def grow(self):
-        self.__height += 0.8
-        self.__height = round(self.__height, 1)
+    # def grow(self):
+    #     self.__height += 0.8
+    #     self.__height = round(self.__height, 1)
 
-    def aging(self):
-        self.__age += 1
+    # def aging(self):
+    #     self.__age += 1
 
     def show(self):
         print(f"{self.name}: {self.__height}cm, {self.__age} days old")
