@@ -7,7 +7,7 @@
 #   By: dzhukov <dzhukov@student.42heilbronn.de>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/04/22 16:56:30 by dzhukov             #+#    #+#            #
-#   Updated: 2026/04/24 16:56:16 by dzhukov            ###   ########.fr      #
+#   Updated: 2026/04/26 14:55:51 by dzhukov            ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -27,7 +27,7 @@ class WaterError(GardenError):
 
 
 def water_plant(plant_name: str) -> None:
-    if plant_name != plant_name.capitalize():
+    if plant_name == plant_name.capitalize():
         print(f"Watering {plant_name}: [OK]")
     else:
         raise PlantError("Plant name is not capitalized")
@@ -39,10 +39,11 @@ def test_watering_system() -> None:
     print("\nTesting valid plants...")
     print("Opening watering system")
     try:
-        for plant in ("TOMATO", "LETTUCE", "CARROTS"):
+        for plant in ("Tomato", "Lettuce", "Carrots"):
             water_plant(plant)
     except PlantError as e:
         print(f"Caught PlantError: {e}")
+        print(f"Invalid plant name to water: {plant}")
         print("...ending tests and returning to main")
         return
     finally:
@@ -51,16 +52,16 @@ def test_watering_system() -> None:
     print("\nTesting invalid plants...")
     print("Opening watering system")
     try:
-        for plant in ("tomato", "lettuce", "carrots"):
+        for plant in ("Tomato", "lettuce", "carrots"):
             water_plant(plant)
     except PlantError as e:
         print(f"Caught PlantError: {e}")
+        print(f"Invalid plant name to water: {plant}")
         print("...ending tests and returning to main")
         return
     finally:
         print("Closing watering system")
-
-    print("\nCleanup always happens, even with errors!")
+        print("\nCleanup always happens, even with errors!")
 
 
 if __name__ == "__main__":
