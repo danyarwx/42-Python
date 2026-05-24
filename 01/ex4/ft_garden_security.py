@@ -7,7 +7,7 @@
 #   By: dzhukov <dzhukov@student.42heilbronn.de>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/03/28 15:42:26 by dzhukov             #+#    #+#            #
-#   Updated: 2026/04/03 22:31:08 by dzhukov            ###   ########.fr      #
+#   Updated: 2026/05/24 16:38:51 by dzhukov            ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -25,7 +25,7 @@ class Plant:
             self.__age = 0
         else:
             self.__age = age
-        print(f"Plant created: ", end=" ")
+        print("Plant created: ", end=" ")
         self.show()
 
     # def grow(self):

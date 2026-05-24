@@ -7,7 +7,7 @@
 #   By: dzhukov <dzhukov@student.42heilbronn.de>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/04/03 20:10:05 by dzhukov             #+#    #+#            #
-#   Updated: 2026/04/03 21:20:27 by dzhukov            ###   ########.fr      #
+#   Updated: 2026/05/24 16:39:36 by dzhukov            ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -112,12 +112,12 @@ def ft_plant_types():
     print("\n=== Tree")
     oak = Tree("Oak", 200.0, 365, 5.0)
     oak.show()
-    print(f"[asking the oak to produce shade]")
+    print("[asking the oak to produce shade]")
     oak.produce_shade()
     print("\n=== Vegetable")
     tomato = Vegetable("Tomato", 5.0, 10, "April")
     tomato.show()
-    print(f"[make tomato grow and age for 20 days]")
+    print("[make tomato grow and age for 20 days]")
     tomato.grow_and_age(20)
     tomato.show()
 
