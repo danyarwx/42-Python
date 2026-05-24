@@ -7,7 +7,7 @@
 #   By: dzhukov <dzhukov@student.42heilbronn.de>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/04/22 16:56:24 by dzhukov             #+#    #+#            #
-#   Updated: 2026/04/24 16:05:32 by dzhukov            ###   ########.fr      #
+#   Updated: 2026/05/24 16:44:34 by dzhukov            ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -21,9 +21,9 @@ def garden_operations(operation_number: int) -> None:
     if operation_number == 0:
         input_temperature("abc")
     elif operation_number == 1:
-        a = 10 / 0
+        10 / 0
     elif operation_number == 2:
-        fd = open('./file.txt')
+        open('./file.txt')
     elif operation_number == 3:
         5 + "hello"
     else:
