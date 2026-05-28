@@ -7,14 +7,14 @@
 #   By: dzhukov <dzhukov@student.42heilbronn.de>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/04/27 13:38:59 by dzhukov             #+#    #+#            #
-#   Updated: 2026/04/28 12:00:32 by dzhukov            ###   ########.fr      #
+#   Updated: 2026/05/28 13:28:26 by dzhukov            ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
 import random
 
 
-def gen_player_achievements(achievements: set) -> set:
+def gen_player_achievements(achievements: set[str]) -> set[str]:
     count = random.randint(5, len(achievements) - 2)
 
     return set(random.sample(list(achievements), count))

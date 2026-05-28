@@ -7,7 +7,7 @@
 #   By: dzhukov <dzhukov@student.42heilbronn.de>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/04/27 13:40:04 by dzhukov             #+#    #+#            #
-#   Updated: 2026/04/28 13:25:00 by dzhukov            ###   ########.fr      #
+#   Updated: 2026/05/28 14:08:47 by dzhukov            ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -16,7 +16,7 @@ from typing import Generator
 
 
 def gen_event() -> Generator[tuple[str, str], None, None]:
-    # The generator keeps running forever and creates one random event on demand.
+    # generator keeps running forever and creates one random event on demand
     players = ["alice", "bob", "charlie", "dylan"]
     actions = ["run", "eat", "sleep", "grab", "move", "climb", "swim",
                "release", "use"]
@@ -27,8 +27,9 @@ def gen_event() -> Generator[tuple[str, str], None, None]:
         yield (name, action)
 
 
-def consume_event(events: list[tuple[str, str]]) -> Generator[tuple[str, str], None, None]:
-    # Pick a random event from the list, remove it, then give it to the caller.
+def consume(events:
+            list[tuple[str, str]]) -> Generator[tuple[str, str], None, None]:
+    # pick a random event from the list remove it then give it to the caller
     while len(events) > 0:
         index = random.randrange(len(events))
         event = events[index]
@@ -39,19 +40,22 @@ def consume_event(events: list[tuple[str, str]]) -> Generator[tuple[str, str], N
 def main() -> None:
     print("=== Game Data Stream Processor ===")
 
-    # next() asks the generator for one new event each time through the loop.
+    # next asks the generator for one new event each time through the loop
     event_generator = gen_event()
     for i in range(1000):
         event = next(event_generator)
         print(f"Event {i}: Player {event[0]} did action {event[1]}")
 
-    # Build a short list from a new generator, then consume it until it is empty.
+    # build a list from a new generator then consume it until it is empty
     list_generator = gen_event()
-    events = [next(list_generator) for i in range(10)]
+    events = []
+
+    for i in range(10):
+        events.append(next(list_generator))
 
     print(f"Built list of 10 events: {events}")
 
-    for event in consume_event(events):
+    for event in consume(events):
         print(f"Got event from list: {event}")
         print(f"Remains in list: {events}")
 
