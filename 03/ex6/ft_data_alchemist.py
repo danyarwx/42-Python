@@ -25,7 +25,7 @@ def main() -> None:
 
     #  keeps only names already capitalized in the first list
     initial = [player for player in players
-                                   if player == player.capitalize()]
+               if player == player.capitalize()]
 
     # gives every normalized player a random score
     scores = {player: random.randint(0, 1000) for player in capitalized}

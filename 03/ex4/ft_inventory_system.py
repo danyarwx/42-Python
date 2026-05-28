@@ -7,7 +7,7 @@
 #   By: dzhukov <dzhukov@student.42heilbronn.de>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/04/27 13:39:34 by dzhukov             #+#    #+#            #
-#   Updated: 2026/05/28 13:47:51 by dzhukov            ###   ########.fr      #
+#   Updated: 2026/05/28 14:33:30 by dzhukov            ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -102,9 +102,11 @@ def main() -> None:
         least_item = find_least(inventory)
 
         print(
-            f"Item most abundant: {most_item} with quantity {inventory[most_item]}")
+            f"Item most abundant: {most_item}"
+            f" with quantity {inventory[most_item]}")
         print(
-            f"Item least abundant: {least_item} with quantity {inventory[least_item]}")
+            f"Item least abundant: F{least_item}"
+            f" with quantity {inventory[least_item]}")
 
     inventory.update({'magic_item': 1})
     print(f"Updated inventory: {inventory}")
