@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mypy --strict 03/)",
+      "Bash(flake8 03/)"
+    ]
+  }
+}

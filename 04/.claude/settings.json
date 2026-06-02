@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(printf 'hello ancient world\\\\n')",
+      "Bash(python3 ft_ancient_text.py /tmp/frag.txt)",
+      "Bash(python3 ft_ancient_text.py nope.txt)",
+      "Bash(python3 ft_ancient_text.py)",
+      "Bash(python3 ft_archive_creation.py ancient_fragment.txt)",
+      "Bash(python3 -m flake8 ft_archive_creation.py)",
+      "Bash(python3 -m mypy ft_archive_creation.py)",
+      "Bash(python3 ft_vault_security.py)",
+      "Bash(/opt/homebrew/bin/mypy --strict .)"
+    ]
+  }
+}

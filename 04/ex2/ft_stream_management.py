@@ -7,117 +7,88 @@
 #   By: dzhukov <dzhukov@student.42heilbronn.de>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/05/08 12:00:00 by dzhukov             #+#    #+#            #
-#   Updated: 2026/05/08 13:01:20 by dzhukov            ###   ########.fr      #
+#   Updated: 2026/06/02 16:17:28 by dzhukov            ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
-# ---------------------------------------------------------------------
-# EX 2 -- STDIN / STDOUT / STDERR
-# ---------------------------------------------------------------------
-# Every running program automatically gets three I/O "channels". They
-# are file-like objects you can read from or write to.
-#
-#   sys.stdin   (file descriptor 0) -- INPUT stream
-#       Default source for input(). Connected to the keyboard in an
-#       interactive shell. In a pipeline `prog1 | prog2`, prog2's
-#       stdin is wired to prog1's stdout.
-#
-#   sys.stdout  (file descriptor 1) -- standard OUTPUT stream
-#       Default destination for print(). For program RESULTS --
-#       data your script meaningfully produces.
-#
-#   sys.stderr  (file descriptor 2) -- ERROR / alert OUTPUT stream
-#       A separate output channel for diagnostics: warnings,
-#       progress messages, error reports. Still goes to the
-#       terminal by default, but it's NOT the same channel as
-#       stdout, which lets the user redirect them independently.
-#
-# Why two output streams?
-#   It's about SEPARATION. Run:
-#       python3 prog.py > out.txt
-#   This redirects stdout into out.txt. stderr still goes to the
-#   screen. So if you wrote an alert to stderr, the user sees it
-#   live; data lands in the file. Mixing them would mean alerts
-#   end up buried in the data file, useless for debugging.
-#
-# In the shell:
-#   python3 prog.py             -- both shown on screen
-#   python3 prog.py > out.txt   -- only stdout into out.txt
-#   python3 prog.py 2> err.txt  -- only stderr into err.txt (2 is fd)
-#   python3 prog.py > o 2> e    -- both, separately, into two files
-#   python3 prog.py &> all.txt  -- both merged (bash shortcut)
-#
-# Choosing the stream:
-#   print(...)                       -- defaults to sys.stdout
-#   print(..., file=sys.stderr)      -- explicit stderr
-#   sys.stdout.write("text")         -- lower-level (no auto-newline)
-#   sys.stderr.write("text\n")       -- ditto, useful in libraries
-#
-# Reading:
-#   input("prompt: ")  -- prints prompt to stdout, reads a line from
-#                         stdin, returns it WITHOUT the trailing \n.
-#   sys.stdin.read()   -- read EVERYTHING from stdin (until EOF).
-#                         Useful when the program is the receiver in
-#                         a shell pipeline.
-# ---------------------------------------------------------------------
+# EX 2 -- STREAM MANAGEMENT (same flow as ex1, but mind the channels):
+#   - exception messages go to sys.stderr with a "[STDERR]" prefix,
+#     not to stdout, so they can be redirected independently.
+#   - user input is read from sys.stdin instead of input().
 
-# `import sys` makes the sys module available. We need sys.stdout /
-# sys.stderr to direct print() to the right channel.
 import sys
+import typing
 
 
-def ft_stream_management() -> None:
-    # ------------------------------------------------------------------
-    # ft_stream_management:
-    #   1. Reads two lines of user input from stdin.
-    #   2. Echoes a status line to stdout.
-    #   3. Sends a diagnostic alert to stderr.
-    #   4. Confirms completion on stdout.
-    #
-    # Run with `> out.txt` or `2> err.txt` to see the streams split.
-    # ------------------------------------------------------------------
+def error(message: str) -> None:
+    print(f"[STDERR] {message}", file=sys.stderr)
 
-    print("=== CYBER ARCHIVES - COMMUNICATION SYSTEM ===\n")
 
-    # ---- input() -----------------------------------------------------
-    # input(prompt) does three things:
-    #   a) Writes `prompt` to stdout (without newline).
-    #   b) Blocks the program until the user presses Enter on stdin.
-    #   c) Returns whatever the user typed (without the trailing \n).
-    # The return value is ALWAYS a str. If you need a number, wrap
-    # in int(...) or float(...).
-    archivist_id = input("Input Stream active. Enter archivist ID: ")
-    status = input("Input Stream active. Enter status report: ")
+def prompt_line(prompt: str) -> str:
+    # write a prompt to sdtout
+    sys.stdout.write(prompt)
+    # output the prompt from buffer to the screen, wait for user input
+    sys.stdout.flush()
+    # read one single line from stdin and remove trailing \n
+    return sys.stdin.readline().rstrip("\n")
 
-    # Blank line for visual separation in the output.
-    print()
 
-    # ---- Standard data via stdout -----------------------------------
-    # f"..." is an f-string: any {expr} inside is replaced by the
-    # value of expr at runtime. Here we splice in archivist_id and
-    # status (both are strings, no conversion needed).
-    # file=sys.stdout is the default; we pass it explicitly to make
-    # the contrast with stderr below crystal clear.
-    print(
-        f"[STANDARD] Archive status from {archivist_id}: {status}",
-        file=sys.stdout,
-    )
+def transform(data: str) -> str:
+    new_lines = []
+    for line in data.splitlines():
+        new_lines.append(line + "#")
+    # \n is the separator which goes between the strings
+    return "\n".join(new_lines) + "\n"
 
-    # ---- Alert via stderr -------------------------------------------
-    # Same print() call but redirected to stderr. To the eye it
-    # still appears on the terminal -- the difference is invisible
-    # until someone redirects stdout. Try:
-    #   echo "ARCH | nominal" | python3 ft_stream_management.py > /tmp/o
-    # The [ALERT] line is still on screen; [STANDARD] lines went
-    # into /tmp/o.
-    print(
-        "[ALERT] System diagnostic: Communication channels verified",
-        file=sys.stderr,
-    )
 
-    print("[STANDARD] Data transmission complete", file=sys.stdout)
-    print("\nThree-channel communication test successful.")
+def save(content: str) -> None:
+    name = prompt_line("Enter new file name (or empty): ")
+    if name == "":
+        print("Not saving data.")
+        return
+
+    print(f"Saving data to '{name}'")
+    try:
+        out: typing.IO[str] = open(name, "w")
+    except OSError as err:
+        error(f"Error opening file '{name}': {str(err)}")
+        print("Data not saved.")
+        return
+
+    out.write(content)
+    out.close()
+    print(f"Data saved in file '{name}'.")
+
+
+def ft_stream_management(path: str) -> None:
+    print("=== Cyber Archives Recovery & Preservation ===")
+    print(f"Accessing file '{path}'")
+
+    try:
+        vault: typing.IO[str] = open(path, "r")
+    except OSError as err:
+        error(f"Error opening file '{path}': {str(err)}")
+        return
+
+    print("---\n")
+    data = vault.read()
+    print(data)
+    vault.close()
+
+    print("---")
+    print(f"File '{path}' closed.\n")
+
+    print("Transform data:")
+    print("---\n")
+    new_content = transform(data)
+    print(new_content)
+    print("---")
+
+    save(new_content)
 
 
 if __name__ == "__main__":
-    ft_stream_management()
+    if len(sys.argv) != 2:
+        print("Usage: python ft_stream_management.py <file>")
+    else:
+        ft_stream_management(sys.argv[1])
